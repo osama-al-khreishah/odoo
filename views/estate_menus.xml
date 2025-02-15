@@ -1,0 +1,66 @@
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_estate_root" name="Real Estate MR" sequence="10"/>
+
+    <!-- Submenu for Properties -->
+    <menuitem id="menu_estate_property" name="Properties" parent="menu_estate_root" action="action_estate_property" sequence="20"/>
+
+    <!-- Action for Properties -->
+    <record id="action_estate_property" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first property!
+            </p>
+        </field>
+    </record>
+
+    <!-- Action for Property Types -->
+    <record id="action_estate_property_type" model="ir.actions.act_window">
+        <field name="name">Property Types</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Define property types here!
+            </p>
+        </field>
+    </record>
+
+    <!-- Submenu for Property Types -->
+    <menuitem id="menu_estate_property_type" name="Property Types TEST" parent="menu_estate_root" action="action_estate_property_type" sequence="30"/>
+
+   
+    <!-- Action for Property Tags -->
+    <record id="action_estate_property_tag" model="ir.actions.act_window">
+        <field name="name">Property Tags</field>
+        <field name="res_model">estate.property.tag</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add tags to categorize properties!
+            </p>
+        </field>
+    </record>
+
+    <!-- Submenu for Property Tags -->
+    <menuitem id="menu_estate_property_tag" name="Property Tags" parent="menu_estate_root" action="action_estate_property_tag" sequence="40"/>
+
+    
+    <!-- Action for Offers -->
+    <record id="action_estate_property_offer" model="ir.actions.act_window">
+        <field name="name">Offers</field>
+        <field name="res_model">estate.property.offer</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage property offers here!
+            </p>
+        </field>
+    </record>
+
+    <!-- Submenu for Offers -->
+    <menuitem id="menu_estate_property_offer" name="Offers" parent="menu_estate_root" action="action_estate_property_offer" sequence="50"/>
+</odoo>
