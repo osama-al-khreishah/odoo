@@ -8,6 +8,7 @@ class EstatePropertyType(models.Model):
     _description = "Real Estate Property Type"
     _order = "sequence"
 
+
     name = fields.Char(string="Type", required=True)
     sequence = fields.Integer(string="Sequence", default=10)
 
@@ -91,6 +92,7 @@ class EstateProperty(models.Model):
         selection=[("new", "New"), ("offer_received", "Offer Received"), ("offer_accepted", "Offer Accepted"),
                    ("sold", "Sold"), ("canceled", "Canceled")],
         default="new",
+        required=True,
         copy=False,
     )
 
@@ -134,13 +136,21 @@ class EstateProperty(models.Model):
             if not record.offer_ids.filtered(lambda offer: offer.status == "accepted"):
                 raise UserError("A property can only be sold if there is an accepted offer.")
             record.state = "sold"
+            
 
     def action_cancel(self):
     
         for record in self:
             if record.state == "sold":
                 raise UserError("Sold properties cannot be canceled.")
-            record.state = "canceled"
+            property.state = "canceled"
+
+    def unlink(self):
+                     
+        for record in self:
+            if record.state not in ['new', 'canceled']:
+                raise UserError("You can only delete properties that are in 'New' or 'Canceled' state.")  
+        return super(EstateProperty, self).unlink()
     
     # *********************Calculations for calculated fields********************
    
@@ -161,17 +171,18 @@ class EstateProperty(models.Model):
         for record in self:
             if record.state not in ["new", "canceled"]:
                 raise UserError("You can only delete properties that are in 'New' or 'Canceled' state.")
+            
+    @api.model
+    def create(self, vals):
+        property_id = vals.get('property_id')
+        if property_id:
+            property = self.env['estate.property'].browse(vals["property_id"])
 
-    def action_sold(self):
-        for record in self:
-            if record.state == "canceled":
-                raise UserError("Canceled properties cannot be marked as sold.")
-            if not record.offer_ids.filtered(lambda offer: offer.status == "accepted"):
-                raise UserError("A property can only be sold if there is an accepted offer.")
-            record.state = "sold"
+            # Check if the new offer has a lower price than existing offers
+            existing_offers = property.offer_ids
+            for offer in existing_offers:
+                if vals['price'] < offer.price:
+                    raise UserError("You cannot create an offer with a lower amount than an existing offer.")
+            property.state = 'offer_received'
 
-    def action_cancel(self):
-        for record in self:
-            if record.state == "sold":
-                raise UserError("Sold properties cannot be canceled.")
-            record.state = "canceled"
+        return super(EstatePropertyOffer, self).create(vals)
