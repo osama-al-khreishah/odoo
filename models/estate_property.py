@@ -56,7 +56,28 @@ class EstatePropertyOffer(models.Model):
         for record in self:
             if record.create_date and record.date_deadline:
                 record.validity = (record.date_deadline - record.create_date.date()).days
+    @api.model
+    def create(self, vals):
+        # Ensure property_id is in vals
+        property_id = vals.get('property_type_id')
+        if not property_id:
+            raise UserError("Property ID is required to create an offer.")
 
+        # Fetch the related property
+        property = self.env['estate.property'].browse(property_id)
+
+        # Check if the new offer has a lower price than existing offers
+        for offer in property.offer_ids:
+            if vals['price'] < offer.price:
+                raise UserError("You cannot create an offer with a lower amount than an existing offer.")
+
+        # Call the super method to create the offer
+        offer = super(EstatePropertyOffer, self).create(vals)
+
+        # Update the property state to 'Offer Received'
+        property.state = 'offer_received'
+
+        return offer
     
 
 # ----------------------------Main estate property model----------------------------------------
@@ -171,18 +192,3 @@ class EstateProperty(models.Model):
         for record in self:
             if record.state not in ["new", "canceled"]:
                 raise UserError("You can only delete properties that are in 'New' or 'Canceled' state.")
-            
-    @api.model
-    def create(self, vals):
-        property_id = vals.get('property_id')
-        if property_id:
-            property = self.env['estate.property'].browse(vals["property_id"])
-
-            # Check if the new offer has a lower price than existing offers
-            existing_offers = property.offer_ids
-            for offer in existing_offers:
-                if vals['price'] < offer.price:
-                    raise UserError("You cannot create an offer with a lower amount than an existing offer.")
-            property.state = 'offer_received'
-
-        return super(EstatePropertyOffer, self).create(vals)
