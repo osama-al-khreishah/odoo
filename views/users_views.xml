@@ -1,5 +1,5 @@
 <odoo>
-    <!-- Inherited view -->
+    <!-- Inherited view-->
     <record id="view_users_form_inherit_property" model="ir.ui.view">
         <field name="name">res.users.form.inherit.property</field>
         <field name="model">res.users</field>

@@ -186,7 +186,7 @@ class EstateProperty(models.Model):
         for record in self:
             record.best_price = max(record.offer_ids.mapped("price")) if record.offer_ids else 0.0
     
-    # **********************Action methods for the buttons**************************
+    # **********************Action methods for the buttons*****************************
     
     @api.ondelete(at_uninstall=False)
     def _unlink_if_state_new_or_canceled(self):

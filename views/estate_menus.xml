@@ -1,7 +1,5 @@
 <odoo>
-    <!-- Root Menu -->
     <menuitem id="menu_estate_root" name="Real Estate " sequence="10"/>
-
     <!-- Submenu for Properties -->
     <menuitem id="menu_estate_property" name="Properties" parent="menu_estate_root" action="action_estate_property" sequence="20"/>
 

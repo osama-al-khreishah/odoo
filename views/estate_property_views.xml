@@ -76,6 +76,7 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                <!--buttons-->
                     <button string="Cancel" type="object" name="action_cancel"
                             ainvisible="state in ('sold', 'canceled')"/>
                     <button name="action_sold" type="object" string="Sold" ainvisible="state in ('canceled')"/>
