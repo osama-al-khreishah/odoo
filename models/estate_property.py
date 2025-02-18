@@ -58,6 +58,7 @@ class EstatePropertyOffer(models.Model):
                 record.validity = (record.date_deadline - record.create_date.date()).days
     @api.model
     def create(self, vals):
+
         # Ensure property_id is in vals
         property_id = vals.get('property_type_id')
         if not property_id:

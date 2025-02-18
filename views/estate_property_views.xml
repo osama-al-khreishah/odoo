@@ -76,10 +76,9 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button string="Mark as Sold" type="object" name="action_sold" class="btn-primary"
-                            invisible="state != 'offer_accepted'"/>
                     <button string="Cancel" type="object" name="action_cancel"
                             ainvisible="state in ('sold', 'canceled')"/>
+                    <button name="action_sold" type="object" string="Sold" ainvisible="state in ('canceled')"/>
                     <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                 </header>
                 <sheet>
@@ -122,7 +121,7 @@
                             </field>
                         </page>
                         <page string="Description">
-                            <field name="description" placeholder="Enter property description here..."/>
+                            <field name="description" placeholder="Enter property description here..."/>                     
                         </page>
                     </notebook>
                 </sheet>

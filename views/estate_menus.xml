@@ -1,6 +1,6 @@
 <odoo>
     <!-- Root Menu -->
-    <menuitem id="menu_estate_root" name="Real Estate MR" sequence="10"/>
+    <menuitem id="menu_estate_root" name="Real Estate " sequence="10"/>
 
     <!-- Submenu for Properties -->
     <menuitem id="menu_estate_property" name="Properties" parent="menu_estate_root" action="action_estate_property" sequence="20"/>
@@ -30,7 +30,7 @@
     </record>
 
     <!-- Submenu for Property Types -->
-    <menuitem id="menu_estate_property_type" name="Property Types TEST" parent="menu_estate_root" action="action_estate_property_type" sequence="30"/>
+    <menuitem id="menu_estate_property_type" name="Property Types" parent="menu_estate_root" action="action_estate_property_type" sequence="30"/>
 
    
     <!-- Action for Property Tags -->

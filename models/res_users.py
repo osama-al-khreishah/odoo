@@ -1,7 +1,7 @@
 
 from odoo import models, fields
 
-class ResUsers(models.Model):
+class Respartner(models.Model):
     _inherit = "res.users"
 
     property_ids = fields.One2many(
@@ -9,4 +9,3 @@ class ResUsers(models.Model):
         inverse_name='salesperson_id',   # The inverse Many2one field in estate.property
         string='Properties'              # Label for the field
     )
-                                
