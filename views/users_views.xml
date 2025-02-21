@@ -8,7 +8,7 @@
             <!-- Add a new notebook page -->
             <xpath expr="//notebook" position="inside">
                     <page string="Estate Properties offer"> 
-                        <field name="property_ids"/>
+                        <field name="property_type_ids"/>
                     </page>              
             </xpath>
         </field>
